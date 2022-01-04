@@ -11,8 +11,7 @@ function drawCanvas() {
   ctx.scale(1, -1);
 
   for (let angle = 0; angle < Math.PI * 2; angle += 0.01) {
-    // if angle 30
-    let x = angle * 100;
+    let x = angle * 200;
     let y = Math.sin(angle) * 200;
 
     ctx.fillRect(x, y, 5, 5);
