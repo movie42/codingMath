@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>draw figure</title>
+  </head>
+  <body>
+    <h1>캔버스를 이용한 도형 그리기</h1>
+    <a
+      href="https://developer.mozilla.org/ko/docs/Web/API/Canvas_API/Tutorial/Drawing_shapes"
+      >캔버스 도형 그리기</a
+    >
+
+    <h2>그리드</h2>
+    <ul>
+      <li>캔버스 그리드 혹은 좌표 공간</li>
+      <li>캔버스 1단위는 1픽셀과 같다.</li>
+      <li>그리드의 원점은 좌측 상단 (0,0)이다.</li>
+      <li>모든 요소는 이 원점을 기준으로 위치 된다.</li>
+    </ul>
+
+    <h2>직사각형 그리기</h2>
+
+    <ul>
+      <li>SVG와 다르게 캔버스는 오직 하나의 원시적 도형만 제공한다.</li>
+    </ul>
+    <h3>캔버스 위에 직사각형을 그리는데 사용하는 세가지 함수</h3>
+    <ul>
+      <li>
+        <p>fillRect(x, y, width, height)</p>
+        <p>색칠된 직사각형을 그린다.</p>
+      </li>
+
+      <li>
+        <p>strokeRect(x, y, width, height)</p>
+        <p>직사각형 윤곽선을 그린다.</p>
+      </li>
+      <li>
+        <p>clearRect(x, y, width, height)</p>
+        <p>특정 부분을 지우는 직사각형이고, 지워진 부분은 투명해진다.</p>
+      </li>
+
+      <li>세 함수는 모두 같은 변수를 가진다.</li>
+      <li>
+        x, y는 캔버스 좌측 상단에서 사각형의 위치를 뜻한다.(원점에서 거리)
+      </li>
+      <li>width, height는 사각형의 크기</li>
+    </ul>
+
+    <canvas id="canvas" width="150" height="150"></canvas>
+    <script>
+      function draw() {
+        const canvas = document.getElementById("canvas");
+        if (canvas.getContext) {
+          const ctx = canvas.getContext("2d");
+
+          ctx.fillRect(50, 50, 100, 100);
+          ctx.clearRect(65, 65, 70, 70);
+          ctx.strokeRect(70, 70, 60, 60);
+        }
+      }
+      window.addEventListener("load", draw);
+    </script>
+
+    <h2>경로 그리기</h2>
+
+    <h3>경로 그리기에 사용되는 함수</h3>
+    <ul>
+      <li>
+        <p>beginPath()</p>
+        <p>새로운 경로를 만든다.</p>
+      </li>
+    </ul>
+
+    <canvas id="canvasPath"></canvas>
+    <script>
+      function drawPath() {
+        const canvas = document.getElementById("canvasPath");
+
+        if (canvas.getContext) {
+          const ctx = canvas.getContext("2d");
+
+          ctx.beginPath();
+          ctx.moveTo(75, 50);
+          ctx.lineTo(100, 75);
+          ctx.lineTo(100, 25);
+          //   ctx.lineTo();
+          ctx.stroke();
+        }
+      }
+
+      window.addEventListener("load", drawPath);
+    </script>
+
+    <h3>Path methods</h3>
+    <ul>
+      <li>
+        <p>closePath()</p>
+        <p>현재 하위 경로의 시작 부분과 연결된 직선 추가</p>
+      </li>
+      <li>
+        <p>stroke()</p>
+        <p>윤곽선을 이용해 도형을 그린다.</p>
+      </li>
+      <li>
+        <p>fill()</p>
+        <p>경로의 내부를 채워서 내부가 채워진 도형을 그린다.</p>
+      </li>
+    </ul>
+
+    <p>
+      beginPath()가 호출 될 때마다, 하위 경로의 모음은 초기화 되고 새로운 도형을
+      그릴 수 있다.
+    </p>
+    <p>
+      closePath()는 선택사항이다. 현재 점 위치와 시작점 위치를 직선으로 이어서
+      도형을 닫는다.
+    </p>
+
+    <p>fill() 메소드 호출시 자동으로 닫힌 도형이 된다.</p>
+
+    <h2>펜 이동하기</h2>
+    <p>moveTo(x, y)</p>
+    <p>실제로 어떤 것도 그리지 않지만 언급한 경로의 일부가 된다.</p>
+    <p>펜을 x, y로 지정된 좌표로 옮긴다.</p>
+
+    <canvas id="canvasMoveTo"></canvas>
+    <script>
+      function drawArcWithMoveTo() {
+        const canvas = document.getElementById("canvasMoveTo");
+
+        if (canvas.getContext) {
+          const ctx = canvas.getContext("2d");
+
+          ctx.beginPath();
+          ctx.arc(75, 75, 50, 0, Math.PI * 2, true);
+          ctx.moveTo(110, 75);
+          ctx.arc(75, 75, 35, 0, Math.PI, false);
+          ctx.moveTo(65, 65);
+          ctx.arc(60, 65, 5, 0, Math.PI * 2, true); // Left eye
+          ctx.moveTo(95, 65);
+          ctx.arc(90, 65, 5, 0, Math.PI * 2, true); // Right eye
+          ctx.stroke();
+        }
+      }
+
+      window.addEventListener("load", drawArcWithMoveTo);
+    </script>
+
+    <h2>선 그리기</h2>
+
+    <p>lineTo(x, y)</p>
+    <p>현재의 드로잉 위치에서 x, y로 지정된 위치까지 선을 그린다.</p>
+    <canvas id="canvasLineTo"></canvas>
+    <script>
+      function drawLine() {
+        const canvas = document.getElementById("canvasLineTo");
+
+        if (canvas.getContext) {
+          const ctx = canvas.getContext("2d");
+
+          ctx.beginPath();
+          ctx.moveTo(25, 25);
+          ctx.lineTo(100, 25);
+          ctx.lineTo(25, 100);
+          ctx.fill();
+
+          ctx.beginPath();
+          ctx.moveTo(125, 125);
+          ctx.lineTo(125, 45);
+          ctx.lineTo(45, 125);
+          ctx.closePath();
+          ctx.stroke();
+        }
+      }
+
+      window.addEventListener("load", drawLine);
+    </script>
+
+    <h2>호(arc) 그리기</h2>
+
+    <p>arc(x, y, radius, startAngle, endAngle, anticlockwise)</p>
+    <p>
+      x, y를 원점으로, radius(반지름), startAngle에서 시작해서 endAngel에서
+      끝나고 anticlockwise 방향으로 향하는 호를 그린다.
+    </p>
+
+    <p>arcTo(x1, y1, x2, y2, radius)</p>
+    <p>반지름 호를 그리고 이전 점과 직선으로 연결한다.</p>
+
+    <canvas id="canvasArc" width="1000" height="400"></canvas>
+    <script>
+      function drawArc() {
+        const canvas = document.getElementById("canvasArc");
+
+        if (canvas.getContext) {
+          const ctx = canvas.getContext("2d");
+
+          ctx.beginPath();
+          ctx.arc(100, 100, 50, 0, Math.PI * 2, false);
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.arc(200, 100, 50, 0, Math.PI * 2, false);
+          ctx.fill();
+
+          for (let i = 0; i < 4; i++) {
+            for (let j = 0; j < 3; j++) {
+              ctx.beginPath();
+              let x = 200 + j * 50;
+              let y = 200 + i * 50;
+
+              const radius = 20;
+              const startAngle = 0;
+              let endAngle = Math.PI + (Math.PI * j) / 2;
+              let anticlockwise = i % 2 === 0 ? false : true;
+
+              ctx.arc(x, y, radius, startAngle, endAngle, anticlockwise);
+
+              if (i > 1) {
+                ctx.fill();
+              } else {
+                ctx.stroke();
+              }
+            }
+          }
+        }
+      }
+
+      window.addEventListener("load", drawArc);
+    </script>
+
+    <h2>베지에 곡선과 이차 곡선</h2>
+    <a href="https://blog.coderifleman.com/2016/12/30/bezier-curves/"
+      >중학생도 알 수 있는 베지에 곡선(Bezier Curves)</a
+    >
+
+    <ul>
+      <li>
+        <p>quadraticCurveTo(cp1x, cp1y, x, y)</p>
+        <p>
+          cp1x, cp1y로 지정된 제어점을 사용하여서 현재 펜의 위치에서 x,y로
+          지정된 끝점까지 이차 베지에 곡선을 그린다.
+        </p>
+      </li>
+      <li>
+        <p>bezierCurveTo(cp1x, cp1y, cp2x, cp2y, x, y)</p>
+        <p>
+          (cp1x, cp1y) (cp2x, cp2y)로 지정된 제어점에서 x,y로 지정된 끝점까지
+          삼차 베지에 곡선을 그린다.
+        </p>
+      </li>
+    </ul>
+
+    <h3>이차 베지에 곡선</h3>
+    <canvas id="canvas2DBezier" width="400" height="500"></canvas>
+    <script>
+      function draw2DBezierCurve() {
+        const canvas = document.getElementById("canvas2DBezier");
+        if (canvas.getContext) {
+          const ctx = canvas.getContext("2d");
+
+          ctx.beginPath();
+          ctx.fillStyle = "red";
+          ctx.fillRect(197, 397, 5, 5);
+
+          ctx.beginPath();
+          ctx.fillStyle = "blue";
+          ctx.fillRect(300, 50, 5, 5);
+
+          ctx.beginPath();
+          ctx.moveTo(100, 100);
+          ctx.quadraticCurveTo(300, 50, 200, 400);
+          ctx.stroke();
+        }
+      }
+
+      window.addEventListener("load", draw2DBezierCurve);
+    </script>
+
+    <h3>삼차 베지에 곡선</h3>
+    <canvas id="canvas3DBezier" width="400" height="300"></canvas>
+    <script>
+      function draw3DBezierCurve() {
+        const canvas = document.getElementById("canvas3DBezier");
+        if (canvas.getContext) {
+          const ctx = canvas.getContext("2d");
+
+          ctx.beginPath();
+          ctx.moveTo(100, 100);
+          ctx.bezierCurveTo(125, 137, 200, 125, 50, 25);
+          ctx.stroke();
+        }
+      }
+
+      window.addEventListener("load", draw3DBezierCurve);
+    </script>
+
+    <h2>직사각형</h2>
+    <canvas id="canvasRect" width="400" height="300"></canvas>
+    <script>
+      function drawRect() {
+        const canvas = document.getElementById("canvasRect");
+        if (canvas.getContext) {
+          const ctx = canvas.getContext("2d");
+
+          ctx.rect(100, 100, 100, 100);
+          ctx.fill();
+          ctx.rect(50, 50, 100, 100);
+          ctx.stroke();
+          ctx.clearRect(100, 100, 50, 50);
+        }
+      }
+      window.addEventListener("load", drawRect);
+    </script>
+
+    <h2>조합하기</h2>
+    <canvas id="canvasCom" width="500" , height="500"></canvas>
+    <script>
+      function canvasCombination() {
+        const canvas = document.getElementById("canvasCom");
+        if (canvas.getContext) {
+          const ctx = canvas.getContext("2d");
+
+          roundedRect(ctx, 12, 12, 500, 500, 15);
+          roundedRect(ctx, 19, 19, 500, 500, 9);
+          roundedRect(ctx, 53, 53, 49, 33, 10);
+          roundedRect(ctx, 53, 119, 49, 16, 6);
+          roundedRect(ctx, 135, 53, 49, 33, 10);
+          roundedRect(ctx, 135, 119, 25, 49, 10);
+        }
+      }
+
+      function roundedRect(ctx, x, y, width, height, radius) {
+        ctx.beginPath();
+        ctx.moveTo(x, y + radius);
+        ctx.lineTo(x, y + height - radius);
+        ctx.arcTo(x, y + height, x + radius, y + height, radius);
+        ctx.lineTo(x + width - radius, y + height);
+        ctx.arcTo(
+          x + width,
+          y + height,
+          x + width,
+          y + height - radius,
+          radius,
+        );
+        ctx.lineTo(x + width, y + radius);
+        ctx.arcTo(x + width, y, x + width - radius, y, radius);
+        ctx.lineTo(x + radius, y);
+        ctx.arcTo(x, y, x, y + radius, radius);
+        ctx.stroke();
+      }
+
+      window.addEventListener("load", canvasCombination);
+    </script>
+  </body>
+</html>
