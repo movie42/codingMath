@@ -55,11 +55,11 @@ function draw() {
     ctx.clearRect(0, 0, width, height);
 
     if (turningLeft) {
-      angle -= 0.05;
+      angle -= 0.02;
     }
 
     if (turningRight) {
-      angle += 0.05;
+      angle += 0.02;
     }
 
     thrust.setAngle(angle);

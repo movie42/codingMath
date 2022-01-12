@@ -7,7 +7,7 @@ function drawCanvas() {
   canvas.height = window.innerHeight;
 
   let arrowX = width / 2;
-  let arrowY = width / 2;
+  let arrowY = height / 2;
   let x;
   let y;
   let dx;
@@ -26,7 +26,9 @@ function drawCanvas() {
     y = arrowY + Math.sin(circleAngle) * radius;
 
     ctx.save();
+
     circleAngle += speed;
+
     ctx.translate(x, y);
     ctx.rotate(angle);
 

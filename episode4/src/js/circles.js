@@ -19,6 +19,7 @@ function drawCanvas() {
   let slice = (Math.PI * 2) / numObjects;
   let x;
   let y;
+
   for (let i = 0; i < numObjects; i++) {
     angle = i * slice;
 

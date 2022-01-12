@@ -35,7 +35,7 @@ export function bouncing() {
       0,
       Math.PI * 2,
       false,
-    );
+    ); 
     ctx.fill();
 
     if (p.position.getX() + p.radius > width) {

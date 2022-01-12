@@ -11,6 +11,7 @@ function drawCanvas() {
   ctx.scale(1, -1);
 
   for (let angle = 0; angle < Math.PI * 2; angle += 0.01) {
+    // 200은 x, y의 공간을 위해 곱하는 길이
     let x = angle * 200;
     let y = Math.sin(angle) * 200;
 

@@ -1,5 +1,5 @@
 import { bouncing } from "./bouncing.js";
-// import { fireWorks } from "./fireWorks.js";
+//  import { fireWorks } from "./fireWorks.js";
 // import vector from "./vector.js";
 // import particle from "./particle.js";
 
